@@ -76,7 +76,7 @@ public class EpubSpritzer extends Spritzer {
             }
             mEpubUri = epubUri;
             mBook = (new EpubReader()).readEpub(epubInputStream);
-            mMaxChapter = mBook.getSpine().getSpineReferences().size();
+            mMaxChapter = mBook.getTableOfContents().size();
             restoreState(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,7 +128,7 @@ public class EpubSpritzer extends Spritzer {
 
     private String loadCleanStringFromChapter(int chapter) {
         try {
-            String bookStr = new String(mBook.getSpine().getResource(chapter).getData(), "UTF-8");
+            String bookStr = new String(mBook.getTableOfContents().getTocReferences().get(chapter).getResource().getData(), "UTF-8");
 
             return extractText(bookStr);
         } catch (IOException e) {
